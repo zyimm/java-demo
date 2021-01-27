@@ -5,7 +5,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-class Result implements Serializable {
+public class Result implements Serializable {
 
     private int code; // 200是正常，非200表示异常
     private String msg;
