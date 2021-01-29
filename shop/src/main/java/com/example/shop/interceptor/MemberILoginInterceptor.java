@@ -43,8 +43,8 @@ public class MemberILoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
         String token = request.getHeader(Member.TOKEN_KEY);
-        if (token != null) {
-            return this.handle(token, o);
+        if (this.handle(token, o)) {
+            return true;
         }
         throw new Exception("token 无效");
     }
@@ -62,7 +62,7 @@ public class MemberILoginInterceptor implements HandlerInterceptor {
         //有无token 注解
         if (method.isAnnotationPresent(PassToken.class)) {
             PassToken passToken = method.getAnnotation(PassToken.class);
-            if (passToken.required()) {
+            if (!passToken.required()) {
                 return true;
             }
         }

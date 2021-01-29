@@ -17,6 +17,10 @@ public class MemberServiceImpl implements MemberService {
     }
 
     public Member findById(int id){
-        return (Member) this.memberMapper.selectById(id);
+        return this.memberMapper.selectById(id);
+    }
+
+    public int updateById(Member member){
+        return memberMapper.updateById(member);
     }
 }

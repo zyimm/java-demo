@@ -4,13 +4,25 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+/**
+ * 统一返回
+ *
+ * @author ZYIMM
+ */
 @Data
 public class Result implements Serializable {
 
     private int code; // 200是正常，非200表示异常
     private String msg;
-    private Object data;
+    private Object result;
 
+    /**
+     * success
+     *
+     * @param data 数据
+     * @return Result
+     * @author zyimm
+     */
     public static Result success(Object data) {
         return success(200, "操作成功", data);
     }
@@ -19,7 +31,7 @@ public class Result implements Serializable {
         Result result = new Result();
         result.setCode(code);
         result.setMsg(msg);
-        result.setData(data);
+        result.setResult(data);
         return result;
     }
 
@@ -32,10 +44,10 @@ public class Result implements Serializable {
     }
 
     public static Result fail(int code, String msg, Object data) {
-        Result r = new Result();
-        r.setCode(code);
-        r.setMsg(msg);
-        r.setData(data);
-        return r;
+        Result result = new Result();
+        result.setCode(code);
+        result.setMsg(msg);
+        result.setResult(data);
+        return result;
     }
 }

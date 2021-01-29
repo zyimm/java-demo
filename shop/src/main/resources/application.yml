@@ -5,3 +5,7 @@ spring:
     url: jdbc:mysql://127.0.0.1:7997/sign_shop?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=utf-8
     username: root
     password: 123456
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

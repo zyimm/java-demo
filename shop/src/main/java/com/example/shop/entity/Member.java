@@ -18,6 +18,8 @@ public class Member {
 
     private Integer status;
 
+    private String realName;
+
     private String loginType;
 
 }
