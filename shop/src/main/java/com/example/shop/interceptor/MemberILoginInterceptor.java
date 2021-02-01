@@ -89,7 +89,9 @@ public class MemberILoginInterceptor implements HandlerInterceptor {
 
 
     @Override
-    public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) {
+    public void afterCompletion(HttpServletRequest httpServletRequest,
+                                HttpServletResponse httpServletResponse, Object o, Exception e) {
+        //todo
 
     }
 

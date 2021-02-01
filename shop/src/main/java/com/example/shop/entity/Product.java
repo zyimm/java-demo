@@ -1,6 +1,5 @@
 package com.example.shop.entity;
 
-import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -8,8 +7,6 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 @Data
 @TableName("eb_store_product")
@@ -61,8 +58,7 @@ public class Product {
 
     private Integer specType;
 
-    public String getAddTime()
-    {
+    public String getAddTime() {
         return "";
 
     }

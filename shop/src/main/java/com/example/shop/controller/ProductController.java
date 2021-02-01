@@ -1,6 +1,5 @@
 package com.example.shop.controller;
 
-import cn.hutool.core.date.DateUtil;
 import com.example.shop.annotation.PassToken;
 import com.example.shop.common.Result;
 import com.example.shop.service.product.impl.ProductServiceImpl;

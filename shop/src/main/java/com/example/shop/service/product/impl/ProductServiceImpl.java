@@ -23,13 +23,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Object getProductInfoById(Integer id) {
+    public Product getProductInfoById(Integer id) {
         return  this.productMapper.selectById(id);
     }
 
     public ListVO  listProduct(){
         QueryWrapper<Product> queryWrapper = new QueryWrapper<>();
-
         IPage<Product> page = new Page<>(1L, 20L);
         IPage<Product> listProduct =  this.productMapper.selectPage(page, queryWrapper);
         return new ListVO(
