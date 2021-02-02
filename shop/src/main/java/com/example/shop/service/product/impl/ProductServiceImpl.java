@@ -40,4 +40,8 @@ public class ProductServiceImpl implements ProductService {
                 20L
         );
     }
+
+    public Product getProductDetail(Integer id){
+        return this.productMapper.selectById(id);
+    }
 }
