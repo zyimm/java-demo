@@ -16,6 +16,8 @@ public class ProductServiceImpl implements ProductService {
 
     ProductMapper productMapper;
 
+    QueryWrapper<Product> queryWrapper;
+
 
     @Autowired
     public void setProduct(ProductMapper productMapper) {
@@ -28,14 +30,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     public ListVO  listProduct(){
-        QueryWrapper<Product> queryWrapper = new QueryWrapper<>();
+        this.queryWrapper = new QueryWrapper<>();
         IPage<Product> page = new Page<>(1L, 20L);
         IPage<Product> listProduct =  this.productMapper.selectPage(page, queryWrapper);
         return new ListVO(
                 listProduct.getRecords(),
                 listProduct.getTotal(),
                 1L,
-                10L
+                20L
         );
     }
 }
