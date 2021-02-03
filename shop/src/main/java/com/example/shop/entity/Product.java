@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -51,10 +52,10 @@ public class Product implements Serializable {
     private String cateId;
 
     @TableField(numericScale = "2")
-    private Double price;
+    private BigDecimal price;
 
     @TableField(numericScale = "2")
-    private Double cost;
+    private BigDecimal cost;
 
     private String unitName;
 
@@ -70,6 +71,9 @@ public class Product implements Serializable {
 
     private Integer specType;
 
+    @TableField(exist = false)
+    private List<ProductCate> category;
+
     /**
      * 时间处理
      *
@@ -77,8 +81,9 @@ public class Product implements Serializable {
      */
     public String getAddTime() {
         Long addTimeL = Long.valueOf(addTime);
-        Date date = new Date(addTimeL*1000);
+        Date date = new Date(addTimeL * 1000);
         SimpleDateFormat formatter = new SimpleDateFormat(Common.DATE_FORMAT);
         return formatter.format(date);
     }
+
 }

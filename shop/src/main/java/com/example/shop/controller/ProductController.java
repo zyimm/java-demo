@@ -2,6 +2,7 @@ package com.example.shop.controller;
 
 import com.example.shop.annotation.PassToken;
 import com.example.shop.common.Result;
+import com.example.shop.controller.request.PageParamRequest;
 import com.example.shop.controller.request.ProductRequest;
 import com.example.shop.service.product.impl.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +29,13 @@ public class ProductController {
 
     @GetMapping("list")
     @PassToken(required = false)
-    public Object productList(ProductRequest request){
-        return Result.success(this.productService.listProduct(request));
+    public Object productList(ProductRequest request, PageParamRequest page){
+        return Result.success(this.productService.listProduct(request, page));
     }
 
     @GetMapping("detail/{id}")
     @PassToken(required = false)
-    public Object productDetail(@PathVariable Integer id){
-        return Result.success(this.productService.getProductInfoById(id));
+    public Object productDetail(@PathVariable Integer id) throws Exception {
+        return Result.success(this.productService.getProductDetail(id));
     }
 }
