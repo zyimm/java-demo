@@ -4,10 +4,12 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.handlers.FastjsonTypeHandler;
+import com.example.shop.common.constants.Common;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -16,7 +18,7 @@ import java.util.List;
 @Data
 @TableName(value = "eb_store_product", autoResultMap = true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class Product {
+public class Product implements Serializable {
     @TableId
     private Integer id;
 
@@ -76,7 +78,7 @@ public class Product {
     public String getAddTime() {
         Long addTimeL = Long.valueOf(addTime);
         Date date = new Date(addTimeL*1000);
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat formatter = new SimpleDateFormat(Common.DATE_FORMAT);
         return formatter.format(date);
     }
 }

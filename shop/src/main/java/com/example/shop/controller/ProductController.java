@@ -2,6 +2,7 @@ package com.example.shop.controller;
 
 import com.example.shop.annotation.PassToken;
 import com.example.shop.common.Result;
+import com.example.shop.controller.request.ProductRequest;
 import com.example.shop.service.product.impl.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,8 +28,8 @@ public class ProductController {
 
     @GetMapping("list")
     @PassToken(required = false)
-    public Object productList(){
-        return Result.success(this.productService.listProduct());
+    public Object productList(ProductRequest request){
+        return Result.success(this.productService.listProduct(request));
     }
 
     @GetMapping("detail/{id}")
