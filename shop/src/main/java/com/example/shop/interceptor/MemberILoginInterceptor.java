@@ -53,7 +53,7 @@ public class MemberILoginInterceptor implements HandlerInterceptor {
      * 处理
      *
      * @param token  token
-     * @param object 控制器
+     * @param object 控制器方法
      * @return boolean
      */
     private boolean handle(String token, Object object) {
@@ -67,7 +67,7 @@ public class MemberILoginInterceptor implements HandlerInterceptor {
             }
         }
         // 获取 token 中的 user id
-        String memberId;
+        String memberId = "";
         try {
             memberId = JWT.decode(token).getAudience().get(0);
         } catch (JWTDecodeException j) {
@@ -77,9 +77,9 @@ public class MemberILoginInterceptor implements HandlerInterceptor {
         if (member == null) {
             throw new RuntimeException("用户不存在，请重新登录");
         }
-        JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(member.getPwd())).build();
         try {
             // 验证 token
+            JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(member.getPwd())).build();
             jwtVerifier.verify(token);
         } catch (JWTVerificationException e) {
             throw new RuntimeException("401");
