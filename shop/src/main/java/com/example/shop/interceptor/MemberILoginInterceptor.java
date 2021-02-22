@@ -67,7 +67,7 @@ public class MemberILoginInterceptor implements HandlerInterceptor {
             }
         }
         // 获取 token 中的 user id
-        String memberId = "";
+        String memberId;
         try {
             memberId = JWT.decode(token).getAudience().get(0);
         } catch (JWTDecodeException j) {
@@ -91,7 +91,7 @@ public class MemberILoginInterceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest httpServletRequest,
                                 HttpServletResponse httpServletResponse, Object o, Exception e) {
-        //todo
+        //todo 验证完毕的操作
 
     }
 
