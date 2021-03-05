@@ -5,6 +5,7 @@ import com.example.shop.mapper.ProductCateMapper;
 import com.example.shop.service.product.ProductCateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +44,9 @@ public class ProductCateServiceImpl implements ProductCateService {
         }
         return  results;
     }
+
+
+
 
     /**
      * 获取栏目kv 数据

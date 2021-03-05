@@ -15,4 +15,6 @@ public class ProductRequest implements Serializable {
 
     private Integer isHoo;
 
+    private Object data;
+
 }

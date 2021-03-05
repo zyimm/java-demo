@@ -5,21 +5,25 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.handlers.FastjsonTypeHandler;
 import com.example.shop.common.constants.Common;
+import com.example.shop.service.product.impl.ProductCateServiceImpl;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 
 @Data
 @TableName(value = "eb_store_product", autoResultMap = true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class Product implements Serializable {
+
     @TableId
     private Integer id;
 
@@ -49,7 +53,7 @@ public class Product implements Serializable {
 
     private String barCode;
 
-    private String cateId;
+    private Integer cateId;
 
     @TableField(numericScale = "2")
     private BigDecimal price;
@@ -85,5 +89,7 @@ public class Product implements Serializable {
         SimpleDateFormat formatter = new SimpleDateFormat(Common.DATE_FORMAT);
         return formatter.format(date);
     }
+    
+
 
 }

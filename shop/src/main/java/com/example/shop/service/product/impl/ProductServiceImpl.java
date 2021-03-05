@@ -1,5 +1,6 @@
 package com.example.shop.service.product.impl;
 
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -9,10 +10,10 @@ import com.example.shop.entity.Product;
 import com.example.shop.mapper.ProductMapper;
 import com.example.shop.service.product.ProductService;
 import com.example.shop.vo.ListVO;
+import com.example.shop.vo.product.ProductListVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.Map;
+import java.util.List;
 
 
 @Component
@@ -24,6 +25,8 @@ public class ProductServiceImpl implements ProductService {
 
     QueryWrapper<Product> queryWrapper;
 
+    @Autowired
+    ProductListVo productListVo;
 
 
     @Autowired
@@ -43,14 +46,15 @@ public class ProductServiceImpl implements ProductService {
      * @param pageParam 分页
      * @return ListVO
      */
-    public ListVO  listProduct(ProductRequest request, PageParamRequest pageParam){
+    public ListVO<List<Product>>  listProduct(ProductRequest request, PageParamRequest pageParam){
         this.queryWrapper = new QueryWrapper<>();
         IPage<Product> page = new Page<>(pageParam.getPage(), pageParam.getLimit());
         if(request.getStoreInfo() !=null && !request.getStoreInfo().isEmpty()){
             this.queryWrapper.likeRight("store_info", request.getStoreInfo());
         }
+        this.queryWrapper.orderByDesc("id");
         IPage<Product> listProduct =  this.productMapper.selectPage(page, queryWrapper);
-        return new ListVO(
+        return this.productListVo.out(
                 listProduct.getRecords(),
                 listProduct.getTotal(),
                 pageParam.getPage(),

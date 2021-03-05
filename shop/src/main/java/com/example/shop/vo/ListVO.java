@@ -3,10 +3,12 @@ package com.example.shop.vo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
-@Data
-public class ListVO {
 
-    private Object list;
+
+@Data
+public class ListVO<T> {
+
+    private T list;
 
     private long page = 1;
 
@@ -16,7 +18,7 @@ public class ListVO {
     @JsonProperty("total_count")
     private long totalCount;
 
-    public ListVO(Object list, long totalCount ,long page, long pageLimit) {
+    public ListVO(T list, long totalCount , long page, long pageLimit) {
         this.list = list;
         this.page = page;
         this.pageLimit = pageLimit;
