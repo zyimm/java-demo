@@ -31,7 +31,9 @@ public class ProductListVo {
      */
     public ListVO<List<Product>> out(List<Product> list, long totalCount, long page, long pageLimit) {
         this.list = list;
-        this.setCategory();
+        if(this.list.isEmpty()){
+            this.setCategory();
+        }
         return new ListVO<>(this.list, totalCount, page, pageLimit);
     }
 

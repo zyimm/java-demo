@@ -55,7 +55,7 @@ public class ProductCateServiceImpl implements ProductCateService {
      * @param map       分类map
      * @return List<ProductCate>
      */
-    public List<ProductCate> listCategory(Integer productId, Map<Integer, List<ProductCate>> map) {
+    public List<ProductCate> listCategory(Integer productId,  Map<Integer, List<ProductCate>> map) {
         return map.get(productId);
     }
 
