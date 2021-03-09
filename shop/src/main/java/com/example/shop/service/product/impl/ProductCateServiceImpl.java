@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class ProductCateServiceImpl implements ProductCateService {
@@ -51,7 +52,7 @@ public class ProductCateServiceImpl implements ProductCateService {
      * 获取关联栏目-列表用
      *
      * @param productId 商品id
-     * @param map 分类map
+     * @param map       分类map
      * @return List<ProductCate>
      */
     public List<ProductCate> listCategory(Integer productId, Map<Integer, List<ProductCate>> map) {
@@ -65,7 +66,7 @@ public class ProductCateServiceImpl implements ProductCateService {
      * @return map
      */
     public Map<Integer, List<ProductCate>> getCategoryMap(List<Integer> productIds) {
-        Map<Integer, List<ProductCate>> map = new HashMap<>();
+        Map<Integer, List<ProductCate>> map = new ConcurrentHashMap<>();
         Map<Integer, String> categoryName = this.listCategoryKV();
         QueryWrapper<ProductCate> queryWrapper = new QueryWrapper<>();
         List<ProductCate> results = this.productCateMapper.selectList(queryWrapper);

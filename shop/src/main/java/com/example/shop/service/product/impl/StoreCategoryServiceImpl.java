@@ -6,8 +6,8 @@ import com.example.shop.mapper.StoreCategoryMapper;
 import com.example.shop.service.product.StoreCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import java.util.Hashtable;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class StoreCategoryServiceImpl implements StoreCategoryService {
@@ -26,7 +26,7 @@ public class StoreCategoryServiceImpl implements StoreCategoryService {
      * @return Map
      */
     public Map<Integer, String> listCategoryKV(){
-        Map<Integer, String>  map = new Hashtable<>();
+        Map<Integer, String>  map = new ConcurrentHashMap<>();
         QueryWrapper<StoreCategory> queryWrapper = new QueryWrapper<>();
         this.storeCategoryMapper.selectList(queryWrapper).forEach(item-> map.put(item.getId(), item.getCateName()));
         return map;
