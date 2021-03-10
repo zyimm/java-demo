@@ -29,10 +29,6 @@ public class SystemCity {
     private Integer isShow;
 
     public String getMergerName() {
-        if (this.mergerName == null) {
-            return "";
-        } else {
-            return this.mergerName;
-        }
+        return (this.mergerName == null) ?  "": this.mergerName;
     }
 }
