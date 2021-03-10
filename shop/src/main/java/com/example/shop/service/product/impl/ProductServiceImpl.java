@@ -14,8 +14,6 @@ import com.example.shop.vo.product.ProductListVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 
@@ -45,18 +43,18 @@ public class ProductServiceImpl implements ProductService {
     /**
      * 列表
      *
-     * @param request 请求
+     * @param request   请求
      * @param pageParam 分页
      * @return ListVO
      */
-    public ListVO<List<Product>>  listProduct(ProductRequest request, PageParamRequest pageParam){
+    public ListVO<List<Product>> listProduct(ProductRequest request, PageParamRequest pageParam) {
         this.queryWrapper = new QueryWrapper<>();
         IPage<Product> page = new Page<>(pageParam.getPage(), pageParam.getLimit());
-        if(request.getStoreInfo() !=null && !request.getStoreInfo().isEmpty()){
+        if (request.getStoreInfo() != null && !request.getStoreInfo().isEmpty()) {
             this.queryWrapper.likeRight("store_info", request.getStoreInfo());
         }
         this.queryWrapper.orderByDesc("id");
-        IPage<Product> listProduct =  this.productMapper.selectPage(page, queryWrapper);
+        IPage<Product> listProduct = this.productMapper.selectPage(page, queryWrapper);
         return this.productListVo.out(
                 listProduct.getRecords(),
                 listProduct.getTotal(),
@@ -73,7 +71,7 @@ public class ProductServiceImpl implements ProductService {
      */
     public Product getProductDetail(Integer id) throws Exception {
         Product result = this.productMapper.selectById(id);
-        if(result != null){
+        if (result != null) {
             //获取分类
             result.setCategory(this.cateService.listCategory(id));
             return result;
