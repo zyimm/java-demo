@@ -5,7 +5,6 @@ import com.example.shop.common.Result;
 import com.example.shop.entity.Member;
 import com.example.shop.entity.SystemCity;
 import com.example.shop.service.member.impl.MemberServiceImpl;
-import com.example.shop.service.system.SystemCityService;
 import com.example.shop.service.system.impl.SystemCityServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +37,6 @@ public class HomeController {
         Member member = memberService.findById(6);
         Map<String, Object> map = new HashMap<>();
         map.put("data",  member);
-        map.put("test", "zyimm");
         return Result.success(map);
     }
 
@@ -47,7 +45,7 @@ public class HomeController {
     public Result city(){
         List<SystemCity> cityList = systemCityService.listCity();
         Map<String, Object> map = new HashMap<>();
-        map.put("data",  cityList);
+        map.put("list",  cityList);
         return Result.success(map);
     }
 }

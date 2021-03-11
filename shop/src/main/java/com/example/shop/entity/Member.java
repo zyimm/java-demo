@@ -14,15 +14,37 @@ public class Member {
 
     @TableId(value = "uid",type = IdType.AUTO)//指定主键名及自增
     private Long uid;
-
     private String account;
-
-    private String pwd;
-
     private Integer status;
-
+    private String pwd;
     private String realName;
-
+    private String birthday;
+    private String cardId;
+    private String mark;
+    private String partnerId;
+    private String groupId;
+    private String nickname;
+    private String avatar;
+    private String phone;
+    private String addTime;
+    private String addIp;
+    private String lastTime;
+    private String lastIp;
+    private String nowMoney;
+    private String brokeragePrice;
+    private String integral;
+    private String exp;
+    private String signNum;
+    private String level;
+    private String spreadUid;
+    private String spreadTime;
+    private String userType;
+    private String isPromoter;
+    private String payCount;
+    private String spreadCount;
+    private String cleanTime;
+    private String addres;
+    private String adminid;
     private String loginType;
 
 }

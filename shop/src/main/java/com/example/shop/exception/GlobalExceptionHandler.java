@@ -16,7 +16,7 @@ public class GlobalExceptionHandler {
      */
     @ResponseBody
     @ExceptionHandler(Exception.class)
-    public Object handleException(Exception e)  {
+    public Result handleException(Exception e)  {
         String message = e.getMessage();
         if (message == null || message.isEmpty()) {
             message = "服务器出错";
