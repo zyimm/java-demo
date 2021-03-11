@@ -12,7 +12,7 @@ import lombok.Data;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class Member {
 
-    @TableId(value = "uid",type = IdType.AUTO)//指定主键名及自增
+    @TableId(value = "uid", type = IdType.AUTO)//指定主键名及自增
     private Long uid;
 
     private String account;
@@ -47,13 +47,13 @@ public class Member {
 
     private String lastIp;
 
-    private Float nowMoney;
+    private Double nowMoney;
 
-    private Float brokeragePrice;
+    private Double brokeragePrice;
 
-    private Float integral;
+    private Double integral;
 
-    private Float exp;
+    private Double exp;
 
     private Integer signNum;
 
