@@ -7,5 +7,5 @@ import java.util.List;
 
 @Component
 public interface SystemCityMapper {
-    public List<SystemCity> listCity();
+    List<SystemCity> listCity();
 }
