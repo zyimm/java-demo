@@ -1,6 +1,7 @@
 package com.example.shop.service.product.impl;
 
 
+import cn.hutool.core.text.StrSpliter;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -11,16 +12,25 @@ import com.example.shop.mapper.ProductMapper;
 import com.example.shop.service.product.ProductService;
 import com.example.shop.vo.ListVO;
 import com.example.shop.vo.product.ProductListVo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Component
+@Slf4j
 public class ProductServiceImpl implements ProductService {
 
     ProductMapper productMapper;
+
+    ProductRequest request;
 
     ProductCateServiceImpl cateService;
 
@@ -47,20 +57,69 @@ public class ProductServiceImpl implements ProductService {
      * @param pageParam 分页
      * @return ListVO
      */
-    public ListVO<List<Product>> listProduct(ProductRequest request, PageParamRequest pageParam) {
+    public ListVO<List<Product>> listProduct(ProductRequest request, PageParamRequest pageParam) throws Throwable {
         this.queryWrapper = new QueryWrapper<>();
+        this.request = request;
         IPage<Product> page = new Page<>(pageParam.getPage(), pageParam.getLimit());
         if (request.getStoreInfo() != null && !request.getStoreInfo().isEmpty()) {
-            this.queryWrapper.likeRight("store_info", request.getStoreInfo());
+            //this.queryWrapper.likeRight("store_info", request.getStoreInfo());
+            this.buildQuery(this.condition());
         }
+
         this.queryWrapper.orderByDesc("id");
         IPage<Product> listProduct = this.productMapper.selectPage(page, queryWrapper);
+        this.queryWrapper =null;
+        this.request = null;
         return this.productListVo.out(
                 listProduct.getRecords(),
                 listProduct.getTotal(),
                 pageParam.getPage(),
                 pageParam.getLimit()
         );
+    }
+
+    public QueryWrapper<Product> buildQuery(Map<String, String> map){
+        map.forEach((key, val) -> {
+            try {
+                List<String> methodArray = StrSpliter.split( val, '@', 0, true, true);
+                Method m = this.queryWrapper.getClass().
+                        getMethod(key, Object.class, Object.class);
+                //
+                Method requestMethod = this.request.getClass().
+                        getMethod(methodArray.get(1));
+                Type ReturnType = requestMethod.getReturnType();
+                //
+                Object requestVal = requestMethod.invoke(this.request);
+
+                Object requestValue = null;
+                String typeName = ReturnType.getTypeName();
+                log.info(typeName);
+                switch (typeName){
+                    case "java.lang.String":
+                        requestValue = String.valueOf(requestVal);
+                        break;
+                    case "java.lang.Integer":
+                        requestValue = requestVal;
+                        break;
+                }
+                if(requestValue != null){
+                    m.invoke(this.queryWrapper, methodArray.get(0), requestValue);
+                }
+
+            } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        });
+        return this.queryWrapper;
+    }
+
+
+    public Map<String, String> condition() {
+
+        Map<String, String> map = new HashMap<>();
+        map.put("likeRight", "store_info@getStoreInfo");
+        map.put("eq", "is_hoo@getIsHoo");
+        return map;
     }
 
     /**

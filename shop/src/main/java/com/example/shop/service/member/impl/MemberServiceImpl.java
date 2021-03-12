@@ -1,5 +1,6 @@
 package com.example.shop.service.member.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.shop.entity.Member;
 import com.example.shop.mapper.MemberMapper;
 import com.example.shop.service.member.MemberService;
@@ -22,5 +23,9 @@ public class MemberServiceImpl implements MemberService {
 
     public int updateById(Member member){
         return memberMapper.updateById(member);
+    }
+
+    public int update(Member member, QueryWrapper<Member> updateWrapper){
+        return memberMapper.update(member, updateWrapper);
     }
 }

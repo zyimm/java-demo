@@ -21,6 +21,6 @@ public class GlobalExceptionHandler {
         if (message == null || message.isEmpty()) {
             message = "服务器出错";
         }
-        return Result.fail(message);
+        return Result.fail(message, e.getStackTrace());
     }
 }

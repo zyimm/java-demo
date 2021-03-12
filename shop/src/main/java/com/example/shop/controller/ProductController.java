@@ -29,7 +29,7 @@ public class ProductController {
 
     @GetMapping("list")
     @PassToken(required = false)
-    public Object productList(ProductRequest request, PageParamRequest page){
+    public Object productList(ProductRequest request, PageParamRequest page) throws Throwable {
         return Result.success(this.productService.listProduct(request, page));
     }
 

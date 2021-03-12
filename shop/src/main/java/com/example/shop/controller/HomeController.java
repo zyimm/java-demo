@@ -11,6 +11,7 @@ import com.example.shop.util.CustomIdGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +23,9 @@ import java.util.Map;
  * @author ZYIMM
  */
 @RestController
-public class HomeController {
+public class HomeController implements Serializable {
+
+    private transient List<SystemCity> test;
     
     MemberServiceImpl memberService;
 
@@ -52,6 +55,8 @@ public class HomeController {
         List<SystemCity> cityList = systemCityService.listCity();
         Map<String, Object> map = new HashMap<>();
         map.put("list",  cityList);
+        map.put("list2",  this.test);
+        this.test = cityList;
         return Result.success(map);
     }
 
