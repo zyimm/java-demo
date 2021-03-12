@@ -57,7 +57,7 @@ public class ProductServiceImpl implements ProductService {
      * @param pageParam 分页
      * @return ListVO
      */
-    public ListVO<List<Product>> listProduct(ProductRequest request, PageParamRequest pageParam) throws Throwable {
+    public ListVO<List<Product>> listProduct(ProductRequest request, PageParamRequest pageParam) {
         this.queryWrapper = new QueryWrapper<>();
         this.request = request;
         IPage<Product> page = new Page<>(pageParam.getPage(), pageParam.getLimit());
@@ -78,7 +78,7 @@ public class ProductServiceImpl implements ProductService {
         );
     }
 
-    public QueryWrapper<Product> buildQuery(Map<String, String> map){
+    public void buildQuery(Map<String, String> map){
         map.forEach((key, val) -> {
             try {
                 List<String> methodArray = StrSpliter.split( val, '@', 0, true, true);
@@ -110,7 +110,6 @@ public class ProductServiceImpl implements ProductService {
                 e.printStackTrace();
             }
         });
-        return this.queryWrapper;
     }
 
 
