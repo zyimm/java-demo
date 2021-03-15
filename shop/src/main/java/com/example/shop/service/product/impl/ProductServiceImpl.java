@@ -81,7 +81,7 @@ public class ProductServiceImpl implements ProductService {
      * 构建query
      *
      *
-     * @param map
+     * @param map 查询map
      */
     public void buildQuery(Map<String, String> map) {
         map.forEach((key, val) -> {
