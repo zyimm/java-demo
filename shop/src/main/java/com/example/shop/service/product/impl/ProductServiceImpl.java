@@ -15,7 +15,6 @@ import com.example.shop.vo.product.ProductListVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
@@ -68,7 +67,7 @@ public class ProductServiceImpl implements ProductService {
 
         this.queryWrapper.orderByDesc("id");
         IPage<Product> listProduct = this.productMapper.selectPage(page, queryWrapper);
-        this.queryWrapper =null;
+        this.queryWrapper = null;
         this.request = null;
         return this.productListVo.out(
                 listProduct.getRecords(),
@@ -78,10 +77,16 @@ public class ProductServiceImpl implements ProductService {
         );
     }
 
-    public void buildQuery(Map<String, String> map){
+    /**
+     * 构建query
+     *
+     *
+     * @param map
+     */
+    public void buildQuery(Map<String, String> map) {
         map.forEach((key, val) -> {
             try {
-                List<String> methodArray = StrSpliter.split( val, '@', 0, true, true);
+                List<String> methodArray = StrSpliter.split(val, '@', 0, true, true);
                 Method m = this.queryWrapper.getClass().
                         getMethod(key, Object.class, Object.class);
                 //
@@ -94,7 +99,7 @@ public class ProductServiceImpl implements ProductService {
                 Object requestValue = null;
                 String typeName = ReturnType.getTypeName();
                 log.info(typeName);
-                switch (typeName){
+                switch (typeName) {
                     case "java.lang.String":
                         requestValue = String.valueOf(requestVal);
                         break;
@@ -102,7 +107,7 @@ public class ProductServiceImpl implements ProductService {
                         requestValue = requestVal;
                         break;
                 }
-                if(requestValue != null){
+                if (requestValue != null) {
                     m.invoke(this.queryWrapper, methodArray.get(0), requestValue);
                 }
 
@@ -113,8 +118,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
+    /**
+     * 查询配置
+     *
+     * @return map
+     */
     public Map<String, String> condition() {
-
         Map<String, String> map = new HashMap<>();
         map.put("likeRight", "store_info@getStoreInfo");
         map.put("eq", "is_hoo@getIsHoo");
