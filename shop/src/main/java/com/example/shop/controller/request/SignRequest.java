@@ -9,4 +9,7 @@ public class SignRequest {
 
     @NotBlank
     private String account;
+
+    @NotBlank
+    private String pwd;
 }
