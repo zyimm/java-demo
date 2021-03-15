@@ -8,6 +8,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.example.shop.annotation.PassToken;
 import com.example.shop.common.constants.Member;
 import com.example.shop.service.member.impl.MemberServiceImpl;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
@@ -41,7 +42,7 @@ public class MemberILoginInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
+    public boolean preHandle(HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object o) throws Exception {
         String token = request.getHeader(Member.TOKEN_KEY);
         if (this.handle(token, o)) {
             return true;
@@ -66,31 +67,35 @@ public class MemberILoginInterceptor implements HandlerInterceptor {
                 return true;
             }
         }
-        // 获取 token 中的 user id
-        String memberId;
-        try {
-            memberId = JWT.decode(token).getAudience().get(0);
-        } catch (JWTDecodeException j) {
-            throw new RuntimeException(j.getMessage());
-        }
-        com.example.shop.entity.Member member = memberService.findById(Integer.parseInt(memberId));
-        if (member == null) {
-            throw new RuntimeException("用户不存在，请重新登录");
-        }
-        try {
-            // 验证 token
-            JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(member.getPwd())).build();
-            jwtVerifier.verify(token);
-        } catch (JWTVerificationException e) {
-            throw new RuntimeException("401");
+        if (token != null) {
+            // 获取 token 中的 user id
+            String memberId;
+            try {
+                memberId = JWT.decode(token).getAudience().get(0);
+            } catch (JWTDecodeException j) {
+                throw new RuntimeException(j.getMessage());
+            }
+            com.example.shop.entity.Member member = memberService.findById(Integer.parseInt(memberId));
+            if (member == null) {
+                throw new RuntimeException("用户不存在，请重新登录");
+            }
+            try {
+                // 验证 token
+                JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(member.getPwd())).build();
+                jwtVerifier.verify(token);
+            } catch (JWTVerificationException e) {
+                throw new RuntimeException("401");
+            }
+        } else {
+            throw new RuntimeException("Token 异常");
         }
         return true;
     }
 
 
     @Override
-    public void afterCompletion(HttpServletRequest httpServletRequest,
-                                HttpServletResponse httpServletResponse, Object o, Exception e) {
+    public void afterCompletion(@NotNull HttpServletRequest httpServletRequest,
+                                @NotNull HttpServletResponse httpServletResponse, @NotNull Object o, Exception e) {
         //todo 验证完毕的操作
 
     }
