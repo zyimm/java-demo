@@ -7,9 +7,9 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class SignRequest {
 
-    @NotBlank
+    @NotBlank(message = "用户账号不能为空")
     private String account;
 
-    @NotBlank
+    @NotBlank(message = "用户密码不能为空")
     private String pwd;
 }
